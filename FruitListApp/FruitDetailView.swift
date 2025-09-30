@@ -8,18 +8,24 @@
 import SwiftUI
 
 struct FruitDetailView: View {
-    let fruit: Fruit   // ✅ instance, not type
-
+    let fruit: Fruit
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(spacing: 15) {
             Text(fruit.name)
                 .font(.largeTitle)
                 .bold()
-
-            Text(fruit.description)
-                .font(.body)
-                .foregroundStyle(.secondary)
-
+            
+            Text("Family: \(fruit.family)")
+            Text("Order: \(fruit.order)")
+            
+            if let nutrition = fruit.nutritions {
+                Text("Calories: \(nutrition.calories)")
+                Text("Carbs: \(nutrition.carbohydrates)g, Protein: \(nutrition.protein)g, Fat: \(nutrition.fat)g, Sugar: \(nutrition.sugar)g")
+                    .font(.subheadline)
+                    .multilineTextAlignment(.center)
+            }
+            
             Spacer()
         }
         .padding()
@@ -29,8 +35,13 @@ struct FruitDetailView: View {
 }
 
 #Preview {
-    FruitDetailView(
-        fruit: Fruit(name: "Apple", description: "Crisp and sweet, great for snacks.")
-    )
+    FruitDetailView(fruit: Fruit(
+        name: "Apple",
+        family: "Rosaceae",
+        order: "Rosales",
+        nutritions: Nutrition(carbohydrates: 22, protein: 1, fat: 0.2, calories: 96, sugar: 17.2)
+    ))
 }
+
+
 
